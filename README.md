@@ -41,8 +41,8 @@ Before you begin, make sure you have the following installed on your computer:
 Open your terminal (Command Prompt on Windows, Terminal on Mac/Linux) and run:
 
 ```bash
-git clone https://github.com/yourusername/gbworkfloweditor.git
-cd gbworkfloweditor
+git clone https://github.com/ShreyX24/GB-Workflow-Editor.git GB-WF-Editor
+cd GB-WF-Editor
 ```
 
 *Note: Replace `yourusername` with the actual GitHub username/organization*
