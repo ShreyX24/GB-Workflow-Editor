@@ -89,7 +89,7 @@ Then open your browser and go to: `http://localhost:5173`
 To run as a desktop application:
 
 ```bash
-npm run tauri dev
+npx tauri dev
 ```
 
 This will compile and launch the desktop version of the app.
@@ -117,31 +117,6 @@ npm run tauri build
 ```
 
 The installer will be created in `src-tauri/target/release/bundle/`
-
-## 📁 Project Structure
-
-```
-gbworkfloweditor/
-├── public/                 # Static assets (images, icons)
-│   └── images/
-│       └── logo_1.png     # App logo
-├── src/                   # Source code
-│   ├── components/        # Reusable UI components
-│   │   ├── buttons/       # Button components
-│   │   ├── inputs/        # Input components
-│   │   ├── modals/        # Modal dialogs
-│   │   └── checkbox/      # Checkbox components
-│   ├── fonts/             # Custom fonts
-│   ├── App.tsx           # Main application component
-│   ├── main.tsx          # Application entry point
-│   ├── index.css         # Global styles and themes
-│   └── command-center.ts  # App configuration
-├── src-tauri/            # Tauri desktop app configuration
-├── package.json          # Dependencies and scripts
-├── vite.config.ts        # Vite build configuration
-├── tailwind.config.js    # Tailwind CSS configuration
-└── README.md            # This file
-```
 
 ## 🛠 Technologies Used
 
