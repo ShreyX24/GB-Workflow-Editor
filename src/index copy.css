@@ -1,0 +1,388 @@
+@import "tailwindcss";
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+.scrollbar-hide {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+.scrollbar-hide::-webkit-scrollbar {
+  display: none; /* Chrome, Safari and Opera */
+}
+
+.typewrite > .wrap {
+  border-right: 0.08em solid #335c67;
+  animation: blink-caret 0.75s step-end infinite;
+}
+
+@font-face {
+  font-family: "Tenorite N"; /* Choose a name for your font family */
+  src: url("./fonts/tenorite/normal - 29595851800.ttf") format("truetype");
+
+  /* Add other font formats if available for better browser compatibility */
+  font-weight: normal;
+  font-style: normal;
+}
+
+@layer base {
+  :root {
+    /* === LIGHT THEME === */
+    --background: #fffbeb;
+    --background-p1: #89ddd6;
+    --background-p2: #899bdd;
+    --background-p3: #4fb39c;
+    --background-p4: #ec8385;
+    --background-p5: #99a75d;
+    --background-p6: #eccd05;
+    
+    /* Additional Neo-Brutal Colors */
+    --background-p7: #ff6b35; /* Electric orange */
+    --background-p8: #f72585; /* Hot pink */
+    --background-p9: #7209b7; /* Electric purple */
+    --background-p10: #560bad; /* Deep purple */
+    --background-p11: #00f5ff; /* Electric cyan */
+    --background-p12: #39ff14; /* Electric lime */
+    --background-p13: #ff073a; /* Electric red */
+    --background-p14: #ffbe0b; /* Electric amber */
+
+    /* Card Colors */
+    --foreground: #111827;
+    --card-background: #fef3c7;
+    --card-foreground: #111827;
+    --card-shadow: #000000;
+    --accent-background: #800e13;
+    --accent-foreground: #fffbeb;
+    --secondary: #4b5563;
+    --border: #111827;
+    --border-thick: #000000;
+
+    /* Chatbox colors */
+    --chatbox-background-color: #f7eecb;
+    --chat-background-user: #ffbb00;
+    --chat-text-color-user: #000;
+    --chat-background-ai: #89ddd6;
+    --chat-text-color-ai: #000;
+
+    /* Input text colors */
+    --background-input: #ffeda7;
+    --input-border: #000000;
+    --input-focus: #ff6b35;
+
+    /* Button colors - Enhanced */
+    --button-green: #55d355;
+    --button-green-hovered: #4fc04f;
+    --button-green-shadow: #2d5016;
+    
+    --button-yellow: #ffd500;
+    --button-yellow-hovered: #fcdb38;
+    --button-yellow-shadow: #b8860b;
+    
+    --button-blue: #2563eb;
+    --button-blue-hovered: #1549b9;
+    --button-blue-shadow: #1e3a8a;
+    
+    --button-purple: #8b3ecf;
+    --button-purple-hovered: #7e39bb;
+    --button-purple-shadow: #4c1d95;
+    
+    --button-red: #d00000;
+    --button-red-hovered: #b40202;
+    --button-red-shadow: #7f1d1d;
+
+    /* Electric/Neon Buttons */
+    --button-electric-cyan: #00f5ff;
+    --button-electric-cyan-hovered: #00e6f0;
+    --button-electric-cyan-shadow: #164e63;
+
+    --button-electric-pink: #f72585;
+    --button-electric-pink-hovered: #e11d69;
+    --button-electric-pink-shadow: #831843;
+
+    --button-electric-lime: #39ff14;
+    --button-electric-lime-hovered: #32e612;
+    --button-electric-lime-shadow: #365314;
+
+    /* Headers */
+    --header-lime: #bbf451;
+    --header-purple: #9c00ff;
+    --header-electric-blue: #00f5ff;
+    --header-electric-orange: #ff6b35;
+
+    /* Statusbar */
+    --statusbar: #352208;
+
+    /* Alerts/Notifications */
+    --alert-success: #39ff14;
+    --alert-warning: #ffbe0b;
+    --alert-error: #ff073a;
+    --alert-info: #00f5ff;
+
+    /* Surface colors */
+    --surface-1: #ffffff;
+    --surface-2: #fef3c7;
+    --surface-3: #fed7aa;
+  }
+
+  .dark {
+    /* === DARK THEME === */
+    --background: #0a0a0a;
+    --background-p1: #1a4645; /* Dark teal */
+    --background-p2: #1e2749; /* Dark blue */
+    --background-p3: #0f3d32; /* Dark green */
+    --background-p4: #4a1517; /* Dark red */
+    --background-p5: #2d3317; /* Dark olive */
+    --background-p6: #4a3f00; /* Dark yellow */
+    
+    /* Electric colors for dark theme */
+    --background-p7: #ff6b35; /* Keep electric orange bright */
+    --background-p8: #f72585; /* Keep hot pink bright */
+    --background-p9: #a663cc; /* Softer electric purple */
+    --background-p10: #7209b7; /* Electric purple */
+    --background-p11: #00f5ff; /* Keep electric cyan bright */
+    --background-p12: #39ff14; /* Keep electric lime bright */
+    --background-p13: #ff073a; /* Keep electric red bright */
+    --background-p14: #ffbe0b; /* Keep electric amber bright */
+
+    /* Main colors */
+    --foreground: #f5f5f5;
+    --card-background: #1a1a1a;
+    --card-foreground: #f5f5f5;
+    --card-shadow: #000000;
+    --accent-background: #ff073a;
+    --accent-foreground: #000000;
+    --secondary: #a1a1aa;
+    --border: #f5f5f5;
+    --border-thick: #ffffff;
+
+    /* Chatbox colors */
+    --chatbox-background-color: #171717;
+    --chat-background-user: #ff6b35;
+    --chat-text-color-user: #000;
+    --chat-background-ai: #1a4645;
+    --chat-text-color-ai: #f5f5f5;
+
+    /* Input colors */
+    --background-input: #262626;
+    --input-border: #f5f5f5;
+    --input-focus: #00f5ff;
+
+    /* Button colors for dark theme */
+    --button-green: #39ff14;
+    --button-green-hovered: #32e612;
+    --button-green-shadow: #000000;
+    
+    --button-yellow: #ffbe0b;
+    --button-yellow-hovered: #e6a800;
+    --button-yellow-shadow: #000000;
+    
+    --button-blue: #00f5ff;
+    --button-blue-hovered: #00e6f0;
+    --button-blue-shadow: #000000;
+    
+    --button-purple: #a663cc;
+    --button-purple-hovered: #9333ea;
+    --button-purple-shadow: #000000;
+    
+    --button-red: #ff073a;
+    --button-red-hovered: #e11d48;
+    --button-red-shadow: #000000;
+
+    /* Electric buttons maintain intensity */
+    --button-electric-cyan: #00f5ff;
+    --button-electric-cyan-hovered: #33f7ff;
+    --button-electric-cyan-shadow: #000000;
+
+    --button-electric-pink: #f72585;
+    --button-electric-pink-hovered: #ff4da6;
+    --button-electric-pink-shadow: #000000;
+
+    --button-electric-lime: #39ff14;
+    --button-electric-lime-hovered: #5cff42;
+    --button-electric-lime-shadow: #000000;
+
+    /* Headers */
+    --header-lime: #39ff14;
+    --header-purple: #a663cc;
+    --header-electric-blue: #00f5ff;
+    --header-electric-orange: #ff6b35;
+
+    /* Statusbar */
+    --statusbar: #f5f5f5;
+
+    /* Alerts/Notifications */
+    --alert-success: #39ff14;
+    --alert-warning: #ffbe0b;
+    --alert-error: #ff073a;
+    --alert-info: #00f5ff;
+
+    /* Surface colors */
+    --surface-1: #171717;
+    --surface-2: #262626;
+    --surface-3: #404040;
+  }
+}
+
+@theme {
+  /** Fonts */
+  --font-main: "Cabin", sans-serif;
+  --font-tenorite: "Tenorite", sans-serif;
+  --font-heading: "Tourney", sans-serif;
+  --font-pacifico: "Pacifico", cursive;
+  --font-archivo: "Archivo Black", sans-serif;
+  --font-rubik: "Rubik Doodle Shadow", system-ui;
+
+  /** Base Colors */
+  --color-background: var(--background);
+  --color-background-p1: var(--background-p1);
+  --color-background-p2: var(--background-p2);
+  --color-background-p3: var(--background-p3);
+  --color-background-p4: var(--background-p4);
+  --color-background-p5: var(--background-p5);
+  --color-background-p6: var(--background-p6);
+  --color-background-p7: var(--background-p7);
+  --color-background-p8: var(--background-p8);
+  --color-background-p9: var(--background-p9);
+  --color-background-p10: var(--background-p10);
+  --color-background-p11: var(--background-p11);
+  --color-background-p12: var(--background-p12);
+  --color-background-p13: var(--background-p13);
+  --color-background-p14: var(--background-p14);
+
+  --color-foreground: var(--foreground);
+  --color-card-background: var(--card-background);
+  --color-card-foreground: var(--card-foreground);
+  --color-card-shadow: var(--card-shadow);
+  --color-accent-background: var(--accent-background);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-secondary: var(--secondary);
+  --color-border: var(--border);
+  --color-border-thick: var(--border-thick);
+
+  /* Chatbox colors */
+  --color-chatbox-bg: var(--chatbox-background-color);
+  --color-chat-bg-user: var(--chat-background-user);
+  --color-chat-text-user: var(--chat-text-color-user);
+  --color-chat-bg-ai: var(--chat-background-ai);
+  --color-chat-text-ai: var(--chat-text-color-ai);
+
+  /* Input colors */
+  --color-background-input: var(--background-input);
+  --color-input-border: var(--input-border);
+  --color-input-focus: var(--input-focus);
+
+  /* Button colors */
+  --color-button-green: var(--button-green);
+  --color-button-green-hovered: var(--button-green-hovered);
+  --color-button-green-shadow: var(--button-green-shadow);
+  
+  --color-button-yellow: var(--button-yellow);
+  --color-button-yellow-hovered: var(--button-yellow-hovered);
+  --color-button-yellow-shadow: var(--button-yellow-shadow);
+  
+  --color-button-blue: var(--button-blue);
+  --color-button-blue-hovered: var(--button-blue-hovered);
+  --color-button-blue-shadow: var(--button-blue-shadow);
+  
+  --color-button-purple: var(--button-purple);
+  --color-button-purple-hovered: var(--button-purple-hovered);
+  --color-button-purple-shadow: var(--button-purple-shadow);
+  
+  --color-button-red: var(--button-red);
+  --color-button-red-hovered: var(--button-red-hovered);
+  --color-button-red-shadow: var(--button-red-shadow);
+
+  /* Electric button colors */
+  --color-button-electric-cyan: var(--button-electric-cyan);
+  --color-button-electric-cyan-hovered: var(--button-electric-cyan-hovered);
+  --color-button-electric-cyan-shadow: var(--button-electric-cyan-shadow);
+
+  --color-button-electric-pink: var(--button-electric-pink);
+  --color-button-electric-pink-hovered: var(--button-electric-pink-hovered);
+  --color-button-electric-pink-shadow: var(--button-electric-pink-shadow);
+
+  --color-button-electric-lime: var(--button-electric-lime);
+  --color-button-electric-lime-hovered: var(--button-electric-lime-hovered);
+  --color-button-electric-lime-shadow: var(--button-electric-lime-shadow);
+
+  /* Header colors */
+  --color-header-lime: var(--header-lime);
+  --color-header-purple: var(--header-purple);
+  --color-header-electric-blue: var(--header-electric-blue);
+  --color-header-electric-orange: var(--header-electric-orange);
+
+  /* Status bar */
+  --color-statusbar: var(--statusbar);
+
+  /* Alert colors */
+  --color-alert-success: var(--alert-success);
+  --color-alert-warning: var(--alert-warning);
+  --color-alert-error: var(--alert-error);
+  --color-alert-info: var(--alert-info);
+
+  /* Surface colors */
+  --color-surface-1: var(--surface-1);
+  --color-surface-2: var(--surface-2);
+  --color-surface-3: var(--surface-3);
+}
+
+.tourney-300 {
+  font-family: "Tourney", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 700;
+  font-style: normal;
+  font-variation-settings: "wdth" 100;
+}
+
+/* Neo-Brutalism Helper Classes */
+.neo-shadow {
+  box-shadow: 4px 4px 0px var(--color-card-shadow);
+}
+
+.neo-shadow-thick {
+  box-shadow: 8px 8px 0px var(--color-card-shadow);
+}
+
+.neo-border {
+  border: 3px solid var(--color-border-thick);
+}
+
+.neo-border-thin {
+  border: 2px solid var(--color-border);
+}
+
+/* Electric glow effect for dark theme */
+.dark .electric-glow {
+  box-shadow: 0 0 10px currentColor, 0 0 20px currentColor, 0 0 30px currentColor;
+}
+
+/* Button variants for neo-brutalism */
+.btn-neo {
+  border: 3px solid var(--color-border-thick);
+  transition: all 0.1s ease;
+  transform: translate(0, 0);
+  box-shadow: 4px 4px 0px var(--color-card-shadow);
+}
+
+.btn-neo:hover {
+  transform: translate(2px, 2px);
+  box-shadow: 2px 2px 0px var(--color-card-shadow);
+}
+
+.btn-neo:active {
+  transform: translate(4px, 4px);
+  box-shadow: 0px 0px 0px var(--color-card-shadow);
+}
+
+/* Additional utility classes */
+.text-electric-cyan { color: var(--color-background-p11); }
+.text-electric-pink { color: var(--color-background-p8); }
+.text-electric-lime { color: var(--color-background-p12); }
+.text-electric-orange { color: var(--color-background-p7); }
+.text-electric-purple { color: var(--color-background-p9); }
+.text-electric-red { color: var(--color-background-p13); }
+
+.bg-electric-cyan { background-color: var(--color-background-p11); }
+.bg-electric-pink { background-color: var(--color-background-p8); }
+.bg-electric-lime { background-color: var(--color-background-p12); }
+.bg-electric-orange { background-color: var(--color-background-p7); }
+.bg-electric-purple { background-color: var(--color-background-p9); }
+.bg-electric-red { background-color: var(--color-background-p13); }
