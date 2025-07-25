@@ -25,6 +25,7 @@
 
 @layer base {
   :root {
+    /*? Generic Colors */
     --background: #0f4c5c;
     --background-p1: #89ddd6;
     --background-p2: #899bdd;
@@ -32,32 +33,22 @@
     --background-p4: #ec8385;
     --background-p5: #99a75d;
     --background-p6: #eccd05;
-
-    /* Card Colors */
     --foreground: #f9faeb;
+
+    /*? Card Colors */
     --card-background: #fef3c7;
     --card-foreground: #111827;
     --accent-background: #800e13;
     --accent-foreground: #fffbeb;
+
     --secondary: #b4b4b4;
+    --tertiary: #b4b4b4a4;
     --border: #111827;
 
-    /* Chatbox colors */
-    /** Chatbox */
-    --chatbox-background-color: #f7eecb;
-
-    /** User */
-    --chat-background-user: #ffbb00;
-    --chat-text-color-user: #000;
-
-    /** AI */
-    --chat-background-ai: ;
-    --chat-text-color-ai: ;
-
-    /* input text colors */
+    /*? input text colors */
     --background-input: #ffeda7;
 
-    /* button background colors */
+    /*? button background colors */
     --button-green: #55d355;
     --button-green-hovered: #4fc04f;
 
@@ -76,11 +67,11 @@
     --button-orange: #e36414;
     --button-orange-hovered: #d67030;
 
-    /* Headers */
+    /*? Headers */
     --header-lime: #bbf451;
     --header-purple: #9c00ff;
 
-    /* Statusbar */
+    /*? Statusbar */
     --statusbar: #352208;
   }
 
@@ -114,6 +105,7 @@
   --color-accent-background: var(--accent-background);
   --color-accent-foreground: var(--accent-foreground);
   --color-secondary: var(--secondary);
+  --color-tertiary: var(--tertiary);
   --color-border: var(--border);
 
   /* Chatbox colors */
@@ -145,11 +137,9 @@
 
   --color-button-red: var(--button-red);
   --color-button-red-hovered: var(--button-red-hovered);
-  
+
   --color-button-orange: var(--button-orange);
   --color-button-orange-hovered: var(--button-orange-hovered);
-
-  
 
   /* status bar */
   --color-statusbar: var(--statusbar);
