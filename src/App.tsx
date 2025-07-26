@@ -1,24 +1,40 @@
-import { Gpu } from "lucide-react";
+import { Gpu, Upload } from "lucide-react";
 import { Button } from "./components/buttons/button";
 import { CC } from "./command-center";
 import { open } from "@tauri-apps/plugin-dialog";
+import { convertFileSrc } from "@tauri-apps/api/core";
 import ImageQue from "./components/image-comp/image-que";
 import { useState } from "react";
 
 const App = () => {
-  const [imagePreviewPath, setImagePreviewPath] = useState();
+  const [imagePreviewPath, setImagePreviewPath] = useState<string[] | null>();
+  const [previewImgPath, setPreviewImgPath] = useState<string | null>();
+
   const handleAttachFile = async () => {
     try {
-      const fileToImage = await open({
-        multiple: false,
+      const pathToImage = await open({
+        multiple: true,
         directory: false,
       });
-      console.log(fileToImage);
-      setImagePreviewPath(fileToImage);
+      console.log(pathToImage);
+
+      if (pathToImage) {
+        const imageUrl: string[] = [];
+        // Convert the file path to a webview-compatible URL
+        pathToImage.map((item) => {
+          imageUrl.push(convertFileSrc(item));
+        });
+
+        setImagePreviewPath(imageUrl);
+      }
     } catch (error) {
       console.error("Error selecting file:", error);
     }
   };
+
+  const handleProcessImage = () => {
+    // Start Omniparser Annotations one by one on all the images (0, 30 -> Max limit)
+  }
 
   return (
     <div className="font-tenorite bg-background text-foreground flex h-screen w-screen flex-col overflow-hidden">
@@ -56,23 +72,36 @@ const App = () => {
       <div className="flex h-[calc(100%-60px)] w-full flex-col justify-center gap-6 p-4">
         {/* Preview - Image/Annotated | YamGen | generated YAML file */}
         <div className="flex h-[720px] justify-center">
-          <img
-            src="/images/test-image.jpeg"
-            alt=""
-            className="object-fit rounded-md"
-          />
+          {previewImgPath ? (
+            <img
+              src={previewImgPath}
+              alt=""
+              className="w-full rounded-md object-contain"
+            />
+          ) : (
+            <></>
+          )}
         </div>
         {/* Upload  Image + Image Queue*/}
         <div className="flex flex-col gap-4">
           {/* Upload Image */}
           <div className="flex w-fit flex-col items-start justify-center">
-            <Button
-              className="flex items-center justify-center px-10 text-xl"
-              btn_color="orange"
-              placeholder="Annotate"
-              icon_comp={<Gpu className="w-[20px]" />}
-              onClick={handleAttachFile}
-            />
+            <div className="flex gap-4">
+              <Button
+                className="flex items-center justify-center px-10 text-xl"
+                btn_color="orange"
+                placeholder="Annotate"
+                icon_comp={<Gpu className="w-[20px]" />}
+                onClick={handleProcessImage}
+              />
+              <Button
+                className="flex items-center justify-center px-10 text-xl"
+                btn_color="blue"
+                placeholder="Add Images"
+                icon_comp={<Upload className="w-[20px]" />}
+                onClick={handleAttachFile}
+              />
+            </div>
             <span className="text-secondary pt-1 font-sans text-sm">
               To start processing, hit <strong>Annotate</strong>.
             </span>
@@ -83,11 +112,13 @@ const App = () => {
 
           {/* Image queue */}
           <div className="relative flex gap-6">
-            <ImageQue image_path="test-image-path.exe" />
-            <ImageQue image_path="test-image-path.exe" />
-            <ImageQue image_path="test-image-path.exe" />
-            <ImageQue image_path="test-image-path.exe" />
-            <ImageQue image_path="test-image-path.exe" />
+            {imagePreviewPath?.map((image_path, index) => (
+              <ImageQue
+                setPreviewImgPath={setPreviewImgPath}
+                image_path={image_path}
+                key={index}
+              />
+            ))}
           </div>
         </div>
       </div>

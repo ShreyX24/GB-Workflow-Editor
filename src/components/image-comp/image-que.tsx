@@ -1,13 +1,19 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { BtnBgShadow } from "../buttons/btn-bg-shadow";
 import { CircleX } from "lucide-react";
 
 interface ImageQueProps {
-  image_path: string;
+  image_path: string | undefined | null;
+  setPreviewImgPath: React.Dispatch<
+    React.SetStateAction<string | undefined | null>
+  >;
 }
 
-const ImageQue = ({ image_path }: ImageQueProps) => {
-  const [isImageHovered, setIsImageHovered] = useState<boolean>(false);
+const ImageQue = ({ image_path, setPreviewImgPath }: ImageQueProps) => {
+  const [isImageInQueClicked, setIsImageInQueClicked] = useState<boolean>();
+  const [isImageHovered, setIsImageHovered] = useState<boolean>(false); // sets the image in que to display in the preview window
+
+  // Mouse hover over actions in image ques
   const handleImageMSEnter = () => {
     setIsImageHovered(true);
   };
@@ -15,10 +21,21 @@ const ImageQue = ({ image_path }: ImageQueProps) => {
     setIsImageHovered(false);
   };
 
+  useEffect(() => {
+    if (isImageInQueClicked) {
+      console.log("Image Path in image_que: " + image_path)
+      setPreviewImgPath(image_path);
+    }
+  }, [isImageInQueClicked, image_path, setPreviewImgPath]);
+
+  // To set the file name with extension : test.jpg
   const image_name = "" + image_path;
 
   return (
-    <div className="flex flex-col items-center justify-center gap-2">
+    <div
+      className="flex flex-col items-center justify-center gap-2"
+      onClick={() => setIsImageInQueClicked(true)} // sets the image in que to display in the preview window
+    >
       {/* image */}
       <div className="relative flex flex-col items-center justify-center gap-1">
         <BtnBgShadow translate="6" />
@@ -27,17 +44,17 @@ const ImageQue = ({ image_path }: ImageQueProps) => {
           onMouseEnter={handleImageMSEnter}
           onMouseLeave={handleImageMSLeave}
         >
-          <img
-            src={image_path}
-            alt=""
-            className="w-full object-cover"
-          />
+          {image_path ? (
+            <img src={image_path} alt="" className="w-full object-cover select-none" />
+          ) : (
+            <></>
+          )}
 
           {isImageHovered ? (
             <>
               {/* Remove Image Button */}
               <div
-                className="absolute top-0 right-0 flex size-7 cursor-pointer items-center justify-center rounded-full"
+                className="absolute top-0 right-0 flex size-7 cursor-pointer items-center justify-center rounded-full bg-black"
                 onMouseEnter={handleImageMSEnter}
                 onClick={() => {
                   // Remove the image from que
@@ -68,7 +85,7 @@ const ImageQue = ({ image_path }: ImageQueProps) => {
         </div>
       </div>
       {/* image name */}
-      <div className="w-[100px] text-ellipsis whitespace-nowrap overflow-hidden">
+      <div className="w-[100px] overflow-hidden text-ellipsis whitespace-nowrap">
         {/* image name should be in test-im... .jpeg/.png/jpg */}
         <span className="">{image_name}</span>
       </div>

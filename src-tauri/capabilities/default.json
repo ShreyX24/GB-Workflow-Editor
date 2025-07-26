@@ -8,7 +8,16 @@
   "permissions": [
     "core:default",
     "fs:default",
+    {
+      "identifier": "fs:allow-exists",
+      "allow": [
+        {
+          "path": "$APPDATA/*"
+        }
+      ]
+    },
     "opener:default",
-    "dialog:default"
+    "dialog:default",
+    "fs:default"
   ]
 }
