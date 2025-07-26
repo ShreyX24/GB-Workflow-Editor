@@ -1,17 +1,20 @@
-import { Gpu, Image } from "lucide-react";
+import { Gpu } from "lucide-react";
 import { Button } from "./components/buttons/button";
 import { CC } from "./command-center";
 import { open } from "@tauri-apps/plugin-dialog";
 import ImageQue from "./components/image-comp/image-que";
+import { useState } from "react";
 
 const App = () => {
+  const [imagePreviewPath, setImagePreviewPath] = useState();
   const handleAttachFile = async () => {
     try {
-      const file = await open({
+      const fileToImage = await open({
         multiple: false,
         directory: false,
       });
-      console.log(file);
+      console.log(fileToImage);
+      setImagePreviewPath(fileToImage);
     } catch (error) {
       console.error("Error selecting file:", error);
     }
@@ -52,8 +55,12 @@ const App = () => {
       {/* Upload Image Button */}
       <div className="flex h-[calc(100%-60px)] w-full flex-col justify-center gap-6 p-4">
         {/* Preview - Image/Annotated | YamGen | generated YAML file */}
-        <div className="h-[720px] flex justify-center">
-          <img src="/images/test-image.jpeg" alt=""className="object-fit rounded-md"/>
+        <div className="flex h-[720px] justify-center">
+          <img
+            src="/images/test-image.jpeg"
+            alt=""
+            className="object-fit rounded-md"
+          />
         </div>
         {/* Upload  Image + Image Queue*/}
         <div className="flex flex-col gap-4">

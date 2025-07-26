@@ -28,7 +28,7 @@ const ImageQue = ({ image_path }: ImageQueProps) => {
           onMouseLeave={handleImageMSLeave}
         >
           <img
-            src="/images/test-image.jpeg"
+            src={image_path}
             alt=""
             className="w-full object-cover"
           />
