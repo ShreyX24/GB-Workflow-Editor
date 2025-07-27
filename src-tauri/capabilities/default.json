@@ -18,6 +18,6 @@
     },
     "opener:default",
     "dialog:default",
-    "fs:default"
+    "store:default"
   ]
 }
