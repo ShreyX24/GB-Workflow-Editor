@@ -12,12 +12,15 @@ const App = () => {
   const [previewImgPath, setPreviewImgPath] = useState<string | null>();
   const [store, setStore] = useState<any>(null);
 
+  // Helper to check if we have images
+  const hasImages = imagePreviewPath && imagePreviewPath.length > 0;
+
   // Initialize store and load cached data
   useEffect(() => {
     const initStore = async () => {
       try {
         const storeInstance = await load("workflow-editor-store.json", {
-          autoSave: true, // Auto-save changes after 100ms delay
+          autoSave: true,
         });
         setStore(storeInstance);
 
@@ -91,16 +94,13 @@ const App = () => {
 
       if (pathToImage) {
         const imageUrl: string[] = [];
-        // Convert the file path to a webview-compatible URL
         pathToImage.map((item) => {
           imageUrl.push(convertFileSrc(item));
         });
 
-        // Combine with existing images (if any)
         setImagePreviewPath((prev) => {
           const existing = prev || [];
           const combined = [...existing, ...imageUrl];
-          // Remove duplicates
           return Array.from(new Set(combined));
         });
       }
@@ -110,23 +110,8 @@ const App = () => {
   };
 
   const handleProcessImage = () => {
-    // Start Omniparser Annotations one by one on all the images (0, 30 -> Max limit)
     console.log("Processing images:", imagePreviewPath);
   };
-
-  // Clear Cache for saved images
-  // const handleClearCache = async () => {
-  //   try {
-  //     if (store) {
-  //       await store.clear();
-  //       setImagePreviewPath(null);
-  //       setPreviewImgPath(null);
-  //       console.log("Cache cleared successfully");
-  //     }
-  //   } catch (error) {
-  //     console.error("Failed to clear cache:", error);
-  //   }
-  // };
 
   const handleRemoveImage = (imageToRemove: string) => {
     setImagePreviewPath((prev) => {
@@ -135,7 +120,6 @@ const App = () => {
       return filtered.length > 0 ? filtered : null;
     });
 
-    // If the removed image was the preview, clear the preview
     if (previewImgPath === imageToRemove) {
       setPreviewImgPath(null);
     }
@@ -158,11 +142,9 @@ const App = () => {
 
         {/* Nav Items */}
         <div className="h-full w-[calc(100%-400px)]">
-          {/* Route buttons */}
           <div className="flex h-1/2 w-full items-end justify-end pr-4 text-5xl">
             Hello, X
           </div>
-          {/* Route buttons */}
           <div className="flex h-1/2 w-full items-end justify-end pr-4">
             <div className="flex h-full items-center gap-2">
               <Button placeholder="Image" />
@@ -173,67 +155,137 @@ const App = () => {
         </div>
       </nav>
 
-      {/* Upload Image Button */}
-      <div className="flex max-h-[calc(100%-170px)] w-full flex-col justify-center gap-6 p-4">
-        {/* Preview - Image/Annotated | YamGen | generated YAML file */}
-        <div className="flex h-[calc(100%-260px)] w-full items-center justify-center border border-white">
-          {previewImgPath ? (
-            <img
-              src={previewImgPath}
-              alt=""
-              className="h-full w-full rounded-md object-contain"
-            />
-          ) : (
-            <div className="flex items-center justify-center text-gray-500 md:h-[720px] xl:h-[820px]">
-              {imagePreviewPath && imagePreviewPath.length > 0
-                ? "Click on an image below to preview"
-                : "No images loaded"}
+      {/* Main Content Area */}
+      <div className="relative flex max-h-[calc(100%-170px)] w-full flex-col p-4">
+        {/* Preview Area - Only show when there's a preview image */}
+        <div
+          className={`transition-all duration-700 ease-in-out ${
+            previewImgPath
+              ? "mb-6 h-[calc(100%-260px)] opacity-100"
+              : "mb-0 h-0 opacity-0"
+          } overflow-hidden`}
+        >
+          {previewImgPath && (
+            <div className="flex h-full w-full items-center justify-center">
+              <img
+                src={previewImgPath}
+                alt=""
+                className="h-full w-full rounded-md object-contain"
+              />
             </div>
           )}
         </div>
 
-        {/* Upload Image + Image Queue*/}
-        <div className="flex flex-col gap-4">
-          {/* Upload Image */}
-          <div className="flex w-fit flex-col items-start justify-center">
-            <div className="flex gap-4">
-              <Button
-                className="flex items-center justify-center px-10 text-xl"
-                btn_color="orange"
-                placeholder="Annotate"
-                icon_comp={<Gpu className="w-[20px]" />}
-                onClick={handleProcessImage}
-                disabled={!imagePreviewPath || imagePreviewPath.length === 0}
-              />
-              <Button
-                className="flex items-center justify-center px-10 text-xl"
-                btn_color="blue"
-                placeholder="Add Images"
-                icon_comp={<Upload className="w-[20px]" />}
-                onClick={handleAttachFile}
-              />
+        {/* Button and Queue Container */}
+        <div
+          className={`transition-all duration-700 ease-in-out ${
+            hasImages
+              ? "flex flex-col gap-4"
+              : "flex flex-1 items-center justify-center"
+          }`}
+        >
+          {/* Buttons Container */}
+          <div
+            className={`transition-all duration-500 ease-in-out ${
+              hasImages
+                ? "flex w-fit flex-col items-start justify-center"
+                : "flex flex-col items-center justify-center"
+            }`}
+          >
+            {/* Buttons Row */}
+            <div className="flex items-center gap-4">
+              {/* Annotate Button - Only show when images exist */}
+              <div
+                className={`transition-all duration-500 ease-in-out ${
+                  hasImages && previewImgPath
+                    ? "translate-x-0 scale-100 opacity-100"
+                    : "-translate-x-4 scale-0 opacity-0"
+                }`}
+              >
+                <Button
+                  className="flex items-center justify-center px-10 text-xl"
+                  btn_color="orange"
+                  placeholder="Annotate"
+                  icon_comp={<Gpu className="w-[20px]" />}
+                  onClick={handleProcessImage}
+                  disabled={!hasImages}
+                />
+              </div>
+
+              {/* Add Images Button */}
+              <div
+                className={`transition-all duration-500 ease-in-out ${
+                  hasImages
+                    ? "translate-y-0 transform"
+                    : "translate-y-0 scale-110 transform"
+                }`}
+              >
+                <Button
+                  className="flex items-center justify-center px-10 text-xl"
+                  btn_color="blue"
+                  placeholder="Add Images"
+                  icon_comp={<Upload className="w-[20px]" />}
+                  onClick={handleAttachFile}
+                />
+              </div>
             </div>
-            <span className="text-secondary pt-1 font-sans text-sm">
-              To start processing, hit <strong>Annotate</strong>.
-              {imagePreviewPath && imagePreviewPath.length > 0 && (
-                <span className="ml-2 text-green-600">
-                  ({imagePreviewPath.length} image
-                  {imagePreviewPath.length !== 1 ? "s" : ""} loaded)
-                </span>
-              )}
-            </span>
+
+            {/* Instructions Text */}
+            <div
+              className={`transition-all duration-500 ease-in-out ${
+                hasImages
+                  ? "mt-2 translate-y-0 opacity-100"
+                  : "mt-8 translate-y-4 text-center opacity-100"
+              }`}
+            >
+              <span className="text-secondary pt-1 font-sans text-sm">
+                {hasImages ? (
+                  <>
+                    To start processing, hit <strong>Annotate</strong>.
+                    <span className="ml-2 text-green-600">
+                      ({imagePreviewPath!.length} image
+                      {imagePreviewPath!.length !== 1 ? "s" : ""} loaded)
+                    </span>
+                  </>
+                ) : (
+                  <>
+                    Welcome! Start by uploading your workflow images.
+                    <br />
+                    <span className="text-xs opacity-75">
+                      Supports PNG, JPG, JPEG, GIF, BMP, and WebP formats
+                    </span>
+                  </>
+                )}
+              </span>
+            </div>
           </div>
 
-          {/* Image queue */}
-          <div className="relative flex flex-wrap gap-6">
-            {imagePreviewPath?.map((image_path, index) => (
-              <ImageQue
-                setPreviewImgPath={setPreviewImgPath}
-                image_path={image_path}
-                key={`${image_path}-${index}`}
-                onRemove={() => handleRemoveImage(image_path)}
-              />
-            ))}
+          {/* Image Queue - Only show when images exist */}
+          <div
+            className={`transition-all duration-700 ease-in-out ${
+              hasImages
+                ? "max-h-96 translate-y-0 opacity-100"
+                : "max-h-0 translate-y-8 opacity-0"
+            } overflow-hidden`}
+          >
+            <div className="relative flex flex-wrap gap-6">
+              {imagePreviewPath?.map((image_path, index) => (
+                <div
+                  key={`${image_path}-${index}`}
+                  className="animate-in slide-in-from-bottom-4 duration-300"
+                  style={{
+                    animationDelay: `${index * 100}ms`,
+                    animationFillMode: "both",
+                  }}
+                >
+                  <ImageQue
+                    setPreviewImgPath={setPreviewImgPath}
+                    image_path={image_path}
+                    onRemove={() => handleRemoveImage(image_path)}
+                  />
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </div>
@@ -241,6 +293,29 @@ const App = () => {
       <footer className="text-secondary flex h-[20px] w-full items-center justify-center">
         {CC.footer_info_author}
       </footer>
+
+      {/* Custom Styles for Animations */}
+      <style>{`
+        @keyframes slideInFromBottom {
+          from {
+            opacity: 0;
+            transform: translateY(20px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+        
+        .animate-in {
+          animation: slideInFromBottom 0.3s ease-out forwards;
+        }
+        
+        .slide-in-from-bottom-4 {
+          transform: translateY(16px);
+          opacity: 0;
+        }
+      `}</style>
     </div>
   );
 };
